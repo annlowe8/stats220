@@ -8,5 +8,4 @@ A little about me:
 - I am taking STATS 220 because I want to gain experience in R and learn more about the processing of data. 
 - I am interested in learning about the relevant computational tools used, and how to use them. 
 
-A meme that captures how I currently feel about my university studies is ![]
-(https://media1.tenor.com/m/ppI55b6apAgAAAAC/ok.gif)
+A meme that captures how I currently feel about my university studies is ![](https://media1.tenor.com/m/ppI55b6apAgAAAAC/ok.gif)
