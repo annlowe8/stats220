@@ -15,5 +15,7 @@ Here's a ranking of my favourite boba tea stores:
 
 ### P.S.
 
-A meme that captures how I currently feel about my university studies is ![](https://media1.tenor.com/m/STjTuyHNVmwAAAAC/dog-crying-meme-doggo-crys.gif)
+A meme that captures how I currently feel about my university studies is 
+<br>
+![](https://media1.tenor.com/m/STjTuyHNVmwAAAAC/dog-crying-meme-doggo-crys.gif)
 
