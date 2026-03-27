@@ -1,0 +1,97 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE, fig.width=8, fig.height=6)
+
+```
+
+```{css}
+body {
+  font-family: monospace;
+  color: #1a1f4b;
+  line-height: 1.7;
+}
+
+h1, h2, h3 {
+  font-family: monospace;
+  color: #2a47b8;
+  border-bottom: 1px solid #b0c0f0;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+code, pre {
+  background-color: #d0dcff;
+  color: #1a2d99;
+  border-radius: 6px;
+  padding: 2px 5px;
+}
+
+pre {
+  padding: 10px 10px;
+  border-left: 3px solid #2a47b8
+}
+
+img {
+  width: 500px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+```
+
+## Is there a relationship between the genre and the activity when listening to music?
+
+```{r}
+library(tidyverse)
+
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTgb1yzwsWNeOE_--GWrU73P2LBw12eQQvGFqs68XmbmYHjPz9il8iQhDDU3-HzvquKo8IGyRJQcMi5/pub?gid=1632617460&single=true&output=csv")
+
+latest_data <- logged_data %>%
+  rename(time = 2,
+         length = 3,
+         genre = 4,
+         activity = 5)
+
+median_length <- median(latest_data$length)
+total_length  <- sum(latest_data$length)  
+
+num_sessions <- nrow(latest_data)
+
+latest_data %>%
+  ggplot() + 
+  geom_bar(aes(x = genre),
+           fill = "#FF6961") +
+    labs(title = "Genres listened to",
+       subtitle = "Comparing the counts of different genres",
+       caption = "Source: Google Forms",
+       x = "Genre of music listened",
+       y = "Number of times this genre was listened to")
+
+latest_data %>%
+  ggplot() + 
+  geom_bar(aes(x = activity),
+               fill = "#87CEEB") +
+  labs(title = "Activity done when listening to music",
+       subtitle = "Comparing the counts of the activity done when listening to music",
+       caption = "Source: Google Forms",
+       x = "Activity when listening to music",
+       y = "Number of times activity was performed")
+
+latest_data %>%
+  ggplot() + 
+  geom_bar(aes(x = activity,
+               fill = genre)) +
+  labs(title = "Different song moods for different activities?",
+       subtitle = "Comparing genre and activity when listening to music based on personal logs",
+       caption = "Source: Google Forms",
+       x = "Activity when listening to music",
+       y = "Number of times activity was performed")
+
+```
+
+
+During a period of 7 days, I recorded `r num_sessions` sessions of listening to music with a median session length of `r median_length` minutes and a total of `r total_length` (`r total_length / 60` hours and `r total_length % 60`minutes over the 7 days. The below charts summarise data related to genre and the activity I was doing when I listened to music.  
+
