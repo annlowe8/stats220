@@ -1,0 +1,97 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+body {
+  font-family: monospace;
+  color: #1a1f4b;
+  line-height: 1.7;
+}
+
+h1, h2, h3 {
+  font-family: monospace;
+  color: #1db954;
+  padding-top: 6px;
+}
+
+img {
+  width: 500px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+```
+
+## Are there any patterns existing in my music listening habits?
+
+```{r}
+library(tidyverse)
+
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTgb1yzwsWNeOE_--GWrU73P2LBw12eQQvGFqs68XmbmYHjPz9il8iQhDDU3-HzvquKo8IGyRJQcMi5/pub?gid=1632617460&single=true&output=csv")
+
+latest_data <- logged_data %>%
+  rename(time = 2,
+         length = 3,
+         genre = 4,
+         activity = 5)
+
+```
+
+```{r}
+median_length <- median(latest_data$length)
+total_length  <- sum(latest_data$length)
+num_sessions <- nrow(latest_data)
+
+latest_data %>%
+  ggplot() +
+  geom_bar(aes(x = time,
+               fill = genre)) +
+  labs(title = "Does time of day affect genre choice?",
+       subtitle = "Comparing genre choice and the time of day I listened to music",
+       caption = "Source: Google Forms",
+       x = "Time of day",
+       y = "Number of sessions")
+
+latest_data %>%
+  ggplot() + 
+  geom_bar(aes(x = time,
+               fill = activity)) +
+  labs(title = "Does time of day affect the type of activity I partake in when listening to music?",
+       subtitle = "Comparing time and activity when listening to music based on personal logs",
+       caption = "Source: Google Forms",
+       x = "Time of day",
+       y = "Number of sessions")
+
+latest_data %>%
+  ggplot() + 
+  geom_bar(aes(x = activity,
+               fill = genre)) +
+  labs(title = "Does the activity being partaken in affect genre choice?",
+       subtitle = "Comparing genre and activity when listening to music based on personal logs",
+       caption = "Source: Google Forms",
+       x = "Activity when listening to music",
+       y = "Number of times activity was performed")
+
+```
+
+### Summary of values
+
+During a period of 7 days, I recorded `r num_sessions` sessions of listening to music with a median session length of `r median_length` minutes and a total of `r total_length` minutes (`r floor(total_length / 60)` hours and `r total_length %% 60` minutes) over the 7 days. 
+
+### Graph further investigation
+
+The above charts summarise data related to genre, time of day, and the activity I was doing when I listened to music. They reveal clear patterns on my genre choice and how it changes depending on the activity I am partaking in or the time of day.   
+
+The first graph suggests that I tend to listen to Chinese R&B and KPOP more during the evening, while during the late night, I prefer Lo-fi and KPOP. It also shows that I am more likely to listen to chill/bedroom R&B in the mornings/afternoon versus evening/late night. Moreover, I only ever listen to English pop during the mornings and afternoon. 
+
+My second graph shows that during the late night, I am mostly studying when listening to music, while my third graph shows that when I am studying, I mainly listen to KPOP, with Lo-fi being the second most played genre. This leads to an interesting idea - with Lo-fi being a non verbal genre, and KPOP being a non-English genre, it could mean that I am able to focus more when I listen to them. Additionally, I only listen to music in the morning when I am getting ready to head out, which may explain why I listen to English pop the most in the morning - I could be wanting music that hypes me up more to start the day. 
+
+Moreover, my third graph shows that I tend to listen to R&B music when I am commuting - whether that be Chinese R&B or chill/bedroom R&B. This is pretty interesting, as I means I tend to reach for music that is more "chill" or "vibey" during this activity. 
+
+
